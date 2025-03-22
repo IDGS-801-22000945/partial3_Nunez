@@ -1,0 +1,75 @@
+{% macro render_pedido_form(form) %}
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label>{{ form.nombre.label }}</label>
+            {{ form.nombre(class="form-control", required=True) }}
+        </div>
+        <div class="col-md-4">
+            <label>{{ form.direccion.label }}</label>
+            {{ form.direccion(class="form-control", required=True) }}
+        </div>
+        <div class="col-md-4">
+            <label>{{ form.telefono.label }}</label>
+            {{ form.telefono(class="form-control", required=True) }}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6 border-box">
+            <label><strong>{{ form.tamano.label }}</strong></label><br>
+            {% for subfield in form.tamano %}
+                <div class="form-check">
+                    {{ subfield(class="form-check-input") }}
+                    <label class="form-check-label">{{ subfield.label.text }}</label>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-6 border-box">
+            <label><strong>{{ form.ingredientes.label }}</strong></label><br>
+            {% for subfield in form.ingredientes %}
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="{{ subfield.id }}" name="{{ subfield.name }}" value="{{ subfield.data }}">
+                    <label class="form-check-label" for="{{ subfield.id }}">{{ subfield.label.text }}</label>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6 d-flex align-items-center">
+            <label class="me-2">{{ form.cantidad.label }}</label>
+            {{ form.cantidad(class="form-control w-50", required=True) }}
+            <button type="submit" name="agregar" class="btn btn-primary ms-2">Agregar</button>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro render_tabla_pedidos(pedidos) %}
+    <h4 class="mt-4">Pedidos Actuales</h4>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Tamaño</th>
+                <th>Ingredientes</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if pedidos %}
+                {% for p in pedidos %}
+                <tr>
+                    <td>{{ p[0] }}</td>
+                    <td>{{ p[2] }}</td>
+                    <td>{{ p[1] }}</td>
+                    <td>${{ p[3] }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">No hay pedidos aún</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+{% endmacro %}

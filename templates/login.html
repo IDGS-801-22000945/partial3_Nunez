@@ -1,0 +1,66 @@
+{% extends "base_template.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+    <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Iniciar sesión</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative mb-4">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+
+        <form action="" method="POST" class="space-y-4">
+
+
+
+            <!-- Email -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">
+                    {{ form.email.label }}
+                </label>
+                {{ form.email(class="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-300") }}
+                {% for error in form.email.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Contraseña -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">
+                    {{ form.password.label }}
+                </label>
+                {{ form.password(class="w-full mt-1 p-2 border rounded-lg focus:ring focus:ring-blue-300", autocomplete="off") }}
+                {% for error in form.password.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Recordarme -->
+            <div class="flex items-center">
+                {{ form.remember_me(class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring focus:ring-blue-300") }}
+                <label for="remember_me" class="ml-2 text-sm text-gray-600">
+                    {{ form.remember_me.label }}
+                </label>
+            </div>
+
+            <!-- Botón de login -->
+            <button type="submit"
+                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                Iniciar sesión
+            </button>
+        </form>
+
+        <!-- Link para registrarse -->
+        
+    </div>
+</div>
+{% endblock %}
